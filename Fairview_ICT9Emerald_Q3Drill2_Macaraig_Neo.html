@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Q3 Drill 2</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  background: #1a1a1a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.calculator {
+  background: #2a2a2a;
+  width: 340px;
+  padding: 20px;
+  border-radius: 30px;
+  box-shadow:
+    0 0 40px rgba(0, 140, 255, 0.35),
+    inset 0 0 0 1px rgba(267,267,267,0.05);
+}
+
+.display {
+  background: #1f1f1f;
+  color: #eaeaea;
+  font-size: 40px;
+  text-align: right;
+  padding: 20px;
+  border-radius: 18px;
+  margin-bottom: 20px;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+button {
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  font-size: 25px;
+  cursor: pointer;
+  transition: filter 0.15s, transform 0.05s;
+}
+
+button:active {
+  transform: scale(0.90);
+  filter: brightness(1.15);
+}
+
+.btn-num {
+  background: #3a3a3a;
+  color: #ffffff;
+}
+
+.btn-func {
+  background: #9a9a9a;
+  color: #000;
+}
+
+.btn-op {
+  background: #0078d4;
+  color: #fff;
+}
+
+.zero {
+  grid-column: span 2;
+  border-radius: 40px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="calculator">
+  <div id="display" class="display">0</div>
+
+  <div class="buttons">
+    <button class="btn-func" onclick="clearDisplay()">ac</button>
+    <button class="btn-func" onclick="toggleSign()">±</button>
+    <button class="btn-func" onclick="percent()">%</button>
+    <button class="btn-op" onclick="setOperator('/')">÷</button>
+
+    <button class="btn-num" onclick="appendNumber(7)">7</button>
+    <button class="btn-num" onclick="appendNumber(8)">8</button>
+    <button class="btn-num" onclick="appendNumber(9)">9</button>
+    <button class="btn-op" onclick="setOperator('*')">×</button>
+
+    <button class="btn-num" onclick="appendNumber(4)">4</button>
+    <button class="btn-num" onclick="appendNumber(5)">5</button>
+    <button class="btn-num" onclick="appendNumber(6)">6</button>
+    <button class="btn-op" onclick="setOperator('-')">−</button>
+
+    <button class="btn-num" onclick="appendNumber(1)">1</button>
+    <button class="btn-num" onclick="appendNumber(2)">2</button>
+    <button class="btn-num" onclick="appendNumber(3)">3</button>
+    <button class="btn-op" onclick="setOperator('+')">+</button>
+
+    <button class="btn-num zero" onclick="appendNumber(0)">0</button>
+    <button class="btn-num" onclick="appendDot()">.</button>
+    <button class="btn-op" onclick="calculate()">=</button>
+  </div>
+</div>
+
+<script>
+let current = "0";
+let previous = null;
+let operator = null;
+
+function updateDisplay() {
+  document.getElementById("display").innerText = current;
+}
+
+function appendNumber(num) {
+  if (current === "0") {
+    current = num.toString();
+  } else {
+    current += num;
+  }
+  updateDisplay();
+}
+
+function appendDot() {
+  if (!current.includes(".")) {
+    current += ".";
+    updateDisplay();
+  }
+}
+
+function clearDisplay() {
+  current = "0";
+  previous = null;
+  operator = null;
+  updateDisplay();
+}
+
+function toggleSign() {
+  current = (parseFloat(current) * -1).toString();
+  updateDisplay();
+}
+
+function percent() {
+  current = (parseFloat(current) / 100).toString();
+  updateDisplay();
+}
+
+function setOperator(op) {
+  previous = current;
+  operator = op;
+  current = "0";
+}
+
+function calculate() {
+  if (!operator || previous === null) return;
+
+  const a = parseFloat(previous);
+  const b = parseFloat(current);
+  let result;
+
+  switch (operator) {
+    case "+": result = a + b; break;
+    case "-": result = a - b; break;
+    case "*": result = a * b; break;
+    case "/": result = b === 0 ? "Error" : a / b; break;
+  }
+
+  current = result.toString();
+  operator = null;
+  previous = null;
+  updateDisplay();
+}
+</script>
+
+</body>
+</html>
