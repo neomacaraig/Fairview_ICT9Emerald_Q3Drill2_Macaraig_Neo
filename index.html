@@ -85,8 +85,8 @@ button:active {
 
 <div class="calculator">
   <div id="display" class="display">0</div>
-
-  <div class="buttons">
+  
+  <div class="buttons">  ////gives function to the buttons
     <button class="btn-func" onclick="clearDisplay()">ac</button>
     <button class="btn-func" onclick="toggleSign()">±</button>
     <button class="btn-func" onclick="percent()">%</button>
@@ -168,7 +168,7 @@ function calculate() {
   const b = parseFloat(current);
   let result;
 
-  switch (operator) {
+  switch (operator) {  
     case "+": result = a + b; break;
     case "-": result = a - b; break;
     case "*": result = a * b; break;
@@ -183,4 +183,5 @@ function calculate() {
 </script>
 
 </body>
+
 </html>
